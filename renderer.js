@@ -43,17 +43,43 @@ for( let i = 0, len = file.length - 1; i < len; i++ ) //номер массы
 console.log(data);
 //data[масса][форма][закрепление/частота]
 
+$( ".main" ).append( '<br><button id="changer" class="btn btn-danger">Click me!</button>' );
+$( ".main" ).append( '<div id="curve_chart"></div>' );
+
+
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(function()
 {
-	var count = 0;
+	var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
-	for(let oneGraphic of data){
+	var counter = 1;
+	draw(counter); counter++;
 
-		count++;
+	var button = $('#changer');
 
-		$( ".main" ).append( '<div id="curve_chart' + count + '">Form ' + count + '</div>' );
+	button.on('click', function ()
+	{
+		/*button.disabled = true;
 
+	    google.visualization.events.addListener(chart, 'ready', function()
+	    {
+	        button.disabled = false;
+	        console.log('HHey!');
+	    });*/
+
+		draw(counter); counter++;
+
+		if( counter > mass.length )
+		{
+			counter = 1;
+		}
+	});
+
+	
+
+	function draw(count)
+	{
+		var oneGraphic = data[count-1];
 		var dataVisualization = [];
 		dataVisualization[0] = [ 'Mass = ' + mass[count-1], 'Form1', 'Form2', 'Form3', 'Form4', 'Form5', 'Form6', 'Form7', 'Form8', 'Form9', 'Form10' ];
 
@@ -70,17 +96,20 @@ google.charts.setOnLoadCallback(function()
 
 		var d = google.visualization.arrayToDataTable(dataVisualization);
 
-	    var options = {
-	        title: 'Mass = ' + mass[count-1],
-	        //curveType: 'function',
-	        legend: { position: 'bottom' },
-	        width: 1850,
-            height: 900
-	    };
-
-	    var chart = new google.visualization.LineChart(document.getElementById('curve_chart' + count));
+		var options = {
+		    title: 'Mass = ' + mass[count-1],
+		    //curveType: 'function',
+		    legend: { position: 'bottom' },
+		    animation:{
+		       	//startup: true,
+			    duration: 150,
+			    easing: 'out',
+			},
+		    width: 1850,
+	        height: 900
+		};
 
 	    chart.draw(d, options);
-	    
-	}
+	}    
+
 });
