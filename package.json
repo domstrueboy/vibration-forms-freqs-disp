@@ -1,0 +1,21 @@
+{
+  "name": "vibration-forms-freqs-disp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-packager . vibration-forms-freqs-disp --platform=win32 --arch=x64 --out=dist --ignore=dist --overwrite --asar --prune"
+  },
+  "repository": "https://github.com/domstrueboy/vibration-forms-freqs-disp",
+  "keywords": [],
+  "author": "Pavel Bobylyev",
+  "license": "ElMetro",
+  "devDependencies": {
+    "electron": "^1.4.1",
+    "electron-packager": "^8.1.0"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0-alpha.4"
+  }
+}
