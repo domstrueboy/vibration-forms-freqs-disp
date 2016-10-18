@@ -43,6 +43,27 @@ for( let i = 0, len = file.length - 1; i < len; i++ ) //номер массы
 console.log(data);
 //data[масса][форма][закрепление/частота]
 
+
+//Запись распарсенного файла:
+var output = '';
+
+for(let i=0, leni=mass.length; i<leni; i++)
+{
+	output+= 'Mass ' + mass[i] + ' kg:\n';
+	for(let j=0, lenj=data[i].length; j<lenj; j++)
+	{
+		output+= 'Form#' + (j+1) + ': ;' + data[i][j].join([separator = ';']).replace(/\u002E/g, ',') + '\n';
+	}
+}
+
+fs.writeFile('data/output.csv', output, 'utf8', function (err) {
+      if (err) {
+        console.log("failed to save output.csv");
+      }
+});
+//////////////////////////////
+
+
 $( ".main" ).append( '<br><button id="changer" class="btn btn-danger">Click me!</button>' );
 $( ".main" ).append( '<div id="curve_chart"></div>' );
 
@@ -59,14 +80,6 @@ google.charts.setOnLoadCallback(function()
 
 	button.on('click', function ()
 	{
-		/*button.disabled = true;
-
-	    google.visualization.events.addListener(chart, 'ready', function()
-	    {
-	        button.disabled = false;
-	        console.log('HHey!');
-	    });*/
-
 		draw(counter); counter++;
 
 		if( counter > mass.length )
@@ -81,7 +94,7 @@ google.charts.setOnLoadCallback(function()
 	{
 		var oneGraphic = data[count-1];
 		var dataVisualization = [];
-		dataVisualization[0] = [ 'Mass = ' + mass[count-1], 'Form1', 'Form2', 'Form3', 'Form4', 'Form5', 'Form6', 'Form7', 'Form8', 'Form9', 'Form10' ];
+		dataVisualization[0] = [ 'Mass = ' + mass[count-1], 'Паразитная синфазная', 'Рабочая', 'Паразитная противофазная', 'Трубки в плоскости синф', 'Form5', 'Form6', 'Form7', 'Form8', 'Form9', 'Form10' ];
 
 		for( let i = 1, len = 10; i <= len; i++ )
 		{
@@ -102,7 +115,7 @@ google.charts.setOnLoadCallback(function()
 		    legend: { position: 'bottom' },
 		    animation:{
 		       	//startup: true,
-			    duration: 150,
+			    duration: 500,
 			    easing: 'out',
 			},
 		    width: 1850,
